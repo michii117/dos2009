@@ -481,7 +481,7 @@ img.ad-image {
 @media (max-width: 786px){
     a.nav-link {
         padding: 14px 11px !important;
-        font-size: 10px;
+        font-size: 9px;
     }
     section.advertisement {
         flex-direction: column;
