@@ -481,7 +481,7 @@ img.ad-image {
 @media (max-width: 786px){
     a.nav-link {
         padding: 14px 11px !important;
-        font-size: 11px;
+        font-size: 10px;
     }
     section.advertisement {
         flex-direction: column;
@@ -582,6 +582,10 @@ img.ad-image {
 @media (max-width: 520px){
     .login-contianer {
         width: 73vw !important;
+    }
+
+    li.nav-item {
+        font-size: 10px !important;
     }
 }
 
