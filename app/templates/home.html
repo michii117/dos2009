@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+
+<style>
+  .news-item-container {
+    width: 33%;
+    display: inline-block;
+    padding: 20px;
+    vertical-align: top;
+    transition: 1s;
+  }
+
+  img.news-item-image {
+    width: 100%;
+    object-fit: cover;
+    height: 230px;
+    object-position: top;
+    margin-bottom: 15px;
+  }
+
+  .news-item-body-container {
+    padding: 10px 0px;
+  }
+
+  a.news-item-title-link {
+    color: #34383b;
+    text-decoration: none;
+  } 
+
+  .section-heading-title {
+    font-family: 'Playfair Display', fangsong;
+    padding: 10px 20px;
+    padding-left: 0px;
+    font-weight: 500;
+    font-size: 19px;
+    border-bottom: 3px solid;
+    display: inline-block;
+    margin: 0;
+    margin-left: 20px;
+}
+
+.page-number {
+    position: absolute;
+    top: 40px;
+    right: 55px;
+    font-size: 20px;
+}
+
+
+h1 {
+    font-family: -apple-system,BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "NotoSans", sans-serif !important;
+    font-size: 2.7vw;
+    width: 72%;
+    color: #033f4b;
+} 
+
+
+img.advertisement-image {
+    width: 90%;
+    height: 90%;
+    padding: 5%;
+    filter: drop-shadow(0px 0px 5px #00000033);
+    border-radius: 10px;
+    display: block;
+    margin: 0;
+    object-fit: cover;
+    transition: 1s;
+    object-position: top;
+}
+
+.advertisement-graphics {
+  width: 50vw;
+  transition: 1s;
+  display: flex;
+  justify-content: center;
+}
+
+.advertisment-copy {
+  width: 50vw;
+    transition: 1s;
+  padding: 90px 20px;
+}
+
+
+p.advertisment-content {
+    width: 77%;
+    padding: 20px 0px;
+    line-height: 33px;
+    color: #393939;
+    font-family: -apple-system,BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "NotoSans", sans-serif;
+    font-size: 16px;
+}
+
+button {
+    background-color: #393939;
+    border-radius: 2px;
+    border: none;
+    padding: 17px;
+    color: white;
+}
+
+section.advertisement {
+    height: auto;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    padding-bottom: 50px;
+    transition: 1s;
+}
+
+form#adform {
+    background-color: #ffffff;
+    filter: drop-shadow(2px 2px 4px #00000044);
+    border-radius: 10px;
+    width: 65%;
+    height: auto;
+    padding: 30px;
+    margin-top: 15%;
+    margin-left: 10%;
+}
+
+fieldset {
+    width: 100%;
+}
+
+.adfield {
+    display: block;
+    width: 100%;
+    height: 45px;
+    filter: drop-shadow(0px 0px 2px #00000066);
+    border: none;
+    border-radius: 3px;
+    margin: 10px 0px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.adfield:focus-visible {
+    outline-style: 1px solid #0b66ac;
+}
+
+
+label {
+    color: #707070;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+textarea#advertdescription {
+    height: 130px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+
+  <section class="header-news-slidebar">
+    {%for article in articles[:6]%}
+      <div class="news-item-container header-top-news" id="slider-page-{{articles.index(article)}}">
+        <div class="news-item-image-container header-top-news">
+          <a href="{{article['url']}}" class="news-item-image-link header-top-news">
+            <img class="news-item-image header-top-news" src="{{article['urlToImage']}}" alt="">
+          </a>
+        </div>
+      
+        <div class="news-item-body-container header-top-news">
+             
+          <span class="page-number">{{articles.index(article)+1}}/6</span>
+          <p class="news-item-credentials header-top-news">
+            <span class="news-source-name">{{article['source']['name']}}</span> 
+            <span class="news-authors"> -</span>  
+            <span class="news-date">{{date}}</span>
+          </p>
+
+          <a href="{{article['url']}}" class="news-item-title-link"><h6 class="news-item-heading header-top-news">{{article['title']}}</h6></a>
+          <p class="news-item-description header-top-news">{{article['content']}}</p>
+
+          <div class="pagification-buttons">
+      
+            <span class="circular-pagification cpactive first" id="cp-0" onclick="switchSlider(0)"></span>
+            {%for article in articles[1:6]%}
+              <span class="circular-pagification" id="cp-{{articles.index(article)}}" onclick="switchSlider('{{articles.index(article)}}')"></span>
+            {%endfor%}
+          </div>
+        </div>
+
+      </div>
+
+    {%endfor%}
+    
+    
+  </section>
+
+  <section class="news-stories-section">
+    <h6 class="section-heading-title">Top News Stories</h6>
+    <hr style="height: 1px;margin: -1px 20px 15px 20px;">
+    {%for article in articles[6:17]%}
+    <div class="news-item-container">
+      <div class="news-item-image-container">
+        <a href="{{article['url']}}" class="news-item-image-link"><img class="news-item-image" src="{{article['urlToImage']}}" alt=""></a>
+      </div>
+    
+      <div class="news-item-body-container">
+        <hr style="width: 70px; height: 5px; border-color: black;">
+        <a href="{{article['url']}}" class="news-item-title-link"><h6 class="news-item-heading">{{article['title']}}</h6></a>
+        <p class="news-item-description">{{article['description']}}</p>
+      </div>
+    </div>
+    {%endfor%}
+  </section>
+
+  <div class="ad-container">
+    <img src="../static/images/Ads/ad1.PNG" alt="" class="ad-image">
+  </div>
+
+  <section class="advertisement">
+    <div class="advertisment-copy">
+      <h1 class="advertisment-heading">Advertise with us and <span style="color: #0b66ac;">grow your sales</span> </h1>
+      <p class="advertisment-content">Engage over 2.6 billion of our monthly readers and boost your business' visibility. Generate more leads, market your business and grow your sales in one place.</p>
+      
+    </div>
+    <div class="advertisement-graphics">
+      <form action="advert" method="POST" id="adform" enctype="multipart/form-data">
+        {{advert.csrf_token}}
+
+        <fieldset id="adInfo1">
+          <h6 class="adformheader">Personal Information<span class="pagecount">1/3</span></h6>
+          
+          {{advert.firstname.label}}
+          {{advert.firstname(class='adfield')}}
+
+          {{advert.lastname.label}}
+          {{advert.lastname(class='adfield')}}
+
+          {{advert.email.label}}
+          {{advert.email(class='adfield')}}
+
+          {{advert.number.label}}
+          {{advert.number(class='adfield')}}
+
+          <button class="adformbtn" onclick="next(2)">Continue</button>
+        </fieldset>
+        
+
+        <fieldset id="adInfo2" style="display: none;">
+          <h6 class="adformheader">Company Information<span class="pagecount">2/3</span></h6>
+          
+          {{advert.companyname.label}}
+          {{advert.companyname(class='adfield')}}
+
+          {{advert.companytype.label}}
+          {{advert.companytype(class='adfield')}}
+
+          {{advert.jobtitle.label}}
+          {{advert.jobtitle(class='adfield')}}
+
+          <div>
+            <button class="adformbtn" onclick="next(3)" style="width: 49%;">Continue</button>
+            <button class="adformbtn" onclick="next(1)" style="width: 49%;">Back</button>
+          </div>
+          
+
+        </fieldset>
+
+        <fieldset id="adInfo3" style="display: none;">
+          <h6 class="adformheader">Advertisement Information<span class="pagecount">3/3</span></h6>
+          
+          {{advert.adverttitle.label}}
+          {{advert.adverttitle(class='adfield')}}
+  
+          {{advert.advertdescription.label}}
+          {{advert.advertdescription(class='adfield')}}
+  
+          {{advert.advertphoto.label}}
+          {{advert.advertphoto(style='margin: 10px 0px;font-size: 14px;font-weight: 300;display: block;')}}
+
+          <div>
+            <button class="adformbtn" type="submit" style="width: 49%;">Send Advert</button>
+            <button class="adformbtn" onclick="next(2)" style="width: 49%;">Back</button>
+          </div>
+        </fieldset>
+
+        
+      </form>
+    </div>
+  </section>
+  
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/app.min.js') }}" charset="utf-8"></script>
+<script>
+  $('#{{active}}').toggleClass('active');
+</script>
+{% endblock %}
+
+
+
